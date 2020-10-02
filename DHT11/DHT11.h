@@ -1,22 +1,22 @@
 /**
   ******************************************************************************
-  * File Name          : XXXXXX.h
-  * Description        : This file provides code for the configuration
-  *                      of the XXXXX instances.
+  * File Name          : DHT11.h
+  * Description        : DHT11 温湿度传感
   ******************************************************************************
   * @attention
   *
-  * chip:  XXXXXXchip.  
+  * chip:  stm32F103c8t6.  
   * date:  XX.XX.XX
-  * pin:
-  * frequency:  
+  * pin:   dat -> PB11
+  * frequency:  72MHz 
+  * note:
   *
   ******************************************************************************
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __I2C_H
-#define __I2C_H	
+#ifndef __DHT11_H
+#define __DHT11_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -25,37 +25,21 @@
 #include "main.h"
 /* USER CODE END Includes ----------------------------------------------------*/
 
+
 /* USER CODE BEGIN Exported types --------------------------------------------*/
 /* USER CODE END Exported types ----------------------------------------------*/
 
 
 /* USER CODE BEGIN Private defines -------------------------------------------*/
-#define I2C_SCL_PIN      				GPIO_Pin_6   
-#define I2C_SCL_GPIO_PORT   	       	GPIOB  
- 
-#define I2C_SDA_PIN      				GPIO_Pin_7   
-#define I2C_SDA_GPIO_PORT   	       	GPIOB  
- 
-
-#define SCL_H         	 GPIO_SetBits(I2C_SCL_GPIO_PORT, I2C_SCL_PIN)   /*GPIOB->BSRR = GPIO_Pin_6*/
-#define SCL_L            GPIO_ResetBits(I2C_SCL_GPIO_PORT, I2C_SCL_PIN) /*GPIOB->BRR  = GPIO_Pin_6 */
-   
-#define SDA_H         	 GPIO_SetBits(I2C_SDA_GPIO_PORT, I2C_SDA_PIN)   /*GPIOB->BSRR = GPIO_Pin_7*/
-#define SDA_L         	 GPIO_ResetBits(I2C_SDA_GPIO_PORT, I2C_SDA_PIN) /*GPIOB->BRR  = GPIO_Pin_7*/
-
-#define SCL_read       	GPIO_ReadInputDataBit(I2C_SCL_GPIO_PORT, I2C_SCL_PIN)/* GPIOB->IDR  & GPIO_Pin_6   */
-#define SDA_read       	GPIO_ReadInputDataBit(I2C_SDA_GPIO_PORT, I2C_SDA_PIN)/*GPIOB->IDR  & GPIO_Pin_7	  */
+#define DHT11_IO 		GPIOB      		/* 设置GPIO脚，默认为PB11 */
+#define DHT11_PIN		GPIO_Pin_11
 /* USER CODE END Private defines ---------------------------------------------*/
 
 
 /* USER CODE BEGIN Prototypes ------------------------------------------------*/
-void I2C_Configuration(void);
-u8 I2C_Start(void);
-void I2C_Stop(void);
-u8 I2C_SendByte(u8 SendByte);
-u8 I2C_ReceiveByte(u8 flag);
+u8 DHT11_Init(void);					/* 初始化函数，如果DHT11存在响应则返回1，否则0 */
+u8 DHT11_Read_Data(u8 *temp,u8 *humi);  /* 从DHT11读取数据，没有小数部分 */
 /* USER CODE END Prototypes --------------------------------------------------*/
-
 
 #ifdef __cplusplus
 }
@@ -64,10 +48,9 @@ u8 I2C_ReceiveByte(u8 flag);
 
 /********************************* REFERENCE ***********************************
  * [1] code come from
- * https://blog.csdn.net/fch112702/article/details/77547815
+ * https://blog.csdn.net/qq_38203996/article/details/103328291?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.channel_param
  ******************************************************************************/
 
 /************************ (C) COPYRIGHT gzsyf *****END OF FILE*****************/
-
 
 
